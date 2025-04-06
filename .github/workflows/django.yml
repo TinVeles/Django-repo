@@ -29,9 +29,9 @@ jobs:
         run: uv sync
 
       - name: Apply migrations
-        working-directory: ./myproject    # Замените 'myproject' на вашу директорию с manage.py
+        working-directory: ./example    
         run: uv run python manage.py migrate
 
       - name: Run tests
-        working-directory: ./myproject    # Замените 'myproject' на вашу директорию с manage.py
+        working-directory: ./example    
         run: uv run python manage.py test
