@@ -21,9 +21,7 @@ jobs:
 
       - name: Install uv
         run: |
-          # Устанавливаем uv через скрипт
           curl -LsSf https://astral.sh/uv/install.sh | sh
-          # Добавляем uv в PATH
           echo "$HOME/.uv/bin" >> $GITHUB_PATH
           uv --version
 
@@ -31,7 +29,9 @@ jobs:
         run: uv sync
 
       - name: Apply migrations
+        working-directory: ./myproject    # Замените 'myproject' на вашу директорию с manage.py
         run: uv run python manage.py migrate
 
       - name: Run tests
+        working-directory: ./myproject    # Замените 'myproject' на вашу директорию с manage.py
         run: uv run python manage.py test
