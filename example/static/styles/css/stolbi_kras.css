@@ -1,0 +1,36 @@
+body {
+    background: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+.header {
+    padding: 2rem 0;
+    background: #dc3545;
+    color: #fff;
+    text-align: center;
+}
+.header h1 {
+    margin-bottom: 0.5rem;
+}
+.postimg {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.content {
+    margin-top: 2rem;
+}
+p {
+    line-height: 1.6;
+    margin-top: 14px;
+}
+footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background: #e9ecef;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.9em;
+    color: #777;
+}
+
