@@ -1,20 +1,20 @@
 # Название рабочего процесса
-name: test db 
+name: test db connect 
 
-# Определение событий, при которых запускается данный рабочий процесс
+# Определение событий, при которых запускается рабочий процесс
 on:
   push:
     branches: [ main ]  # Запуск при каждом push в ветку 'main'
   pull_request:
     branches: [ main ]  # Запуск при каждом pull request в ветку 'main'
 
-# Определение задач (jobs), которые будут выполняться в рамках рабочего процесса
+# Определение задач (jobs), которые будут выполняться
 jobs:
   test:
-    # Указание операционной системы, на которой будет выполняться задача
+    # Указывает, на какой виртуальной машине будет выполняться задача
     runs-on: ubuntu-latest
 
-    # Определение сервисов, необходимых для выполнения задачи
+    # Определение сервисов, необходимых для работы задачи
     services:
       postgres:
         image: postgres:13  # Используемый образ PostgreSQL версии 13
@@ -25,20 +25,20 @@ jobs:
         ports:
           - 5432:5432  # Проброс порта для доступа к PostgreSQL
         options: >-
-          --health-cmd "pg_isready -U postgres"  # Команда для проверки готовности сервиса
-          --health-interval 10s                  # Интервал между проверками
-          --health-timeout 5s                    # Таймаут для каждой проверки
-          --health-retries 5                     # Количество попыток проверки
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     # Последовательность шагов, выполняемых в рамках задачи
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3  # Действие для клонирования репозитория
+        uses: actions/checkout@v3 
 
-      - name: Set up Python 3.11
+      - name: Set up Python 3.13
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'  # Установка версии Python 3.11
+          python-version: '3.13'
 
       - name: Install uv
         run: |
@@ -61,5 +61,5 @@ jobs:
         run: uv run python manage.py migrate  # Применение миграций базы данных
 
       - name: Run tests
-        working-directory: ./example  # Переход в директорию проекта
-        run: uv run python manage.py test  # Запуск тестов Django
+        working-directory: ./example
+        run: uv run python manage.py test
