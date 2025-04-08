@@ -1,86 +1,65 @@
 # Название рабочего процесса
-# Название рабочего процесса
-name: TEST
+name: TEST2
 
-# Определение событий, при которых запускается рабочий процесс
 # Определение событий, при которых запускается рабочий процесс
 on:
   push:
-    branches: [ main ]  # При каждом push в ветку 'main'
-    branches: [ main ]  # При каждом push в ветку 'main'
+    branches: [ main ]
   pull_request:
-    branches: [ main ]  # При каждом pull request в ветку 'main'
-    branches: [ main ]  # При каждом pull request в ветку 'main'
+    branches: [ main ]
 
-# Определение задач (jobs), которые будут выполняться
 # Определение задач (jobs), которые будут выполняться
 jobs:
   test:
     # Указывает, на какой виртуальной машине будет выполняться задача
-    # Указывает, на какой виртуальной машине будет выполняться задача
     runs-on: ubuntu-latest
 
     # Определение сервисов, необходимых для работы задачи
-    # Определение сервисов, необходимых для работы задачи
     services:
       postgres:
-        image: postgres:13  # Используемый образ PostgreSQL версии 13
+        image: postgres:13
         env:
-          POSTGRES_USER: postgres       # Имя пользователя для БД
-          POSTGRES_PASSWORD: root       # Пароль для БД
-          POSTGRES_DB: exampleDB        # Имя создаваемой БД
-          POSTGRES_USER: postgres       # Имя пользователя для БД
-          POSTGRES_PASSWORD: root       # Пароль для БД
-          POSTGRES_DB: exampleDB        # Имя создаваемой БД
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: root
+          POSTGRES_DB: exampleDB
         ports:
-          - 5432:5432 
+          - 5432:5432
         options: >-
           --health-cmd "pg_isready -U postgres"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
 
-
     # Последовательность шагов, выполняемых в рамках задачи
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3  # Шаг для клонирования репозитория
-        uses: actions/checkout@v3  # Шаг для клонирования репозитория
+        uses: actions/checkout@v3 
 
-      - name: Set up Python 3.13
       - name: Set up Python 3.13
         uses: actions/setup-python@v4
         with:
-          python-version: '3.13'  # Установка версии Python 3.13
-          python-version: '3.13'  # Установка версии Python 3.13
+          python-version: '3.13'
 
       - name: Install uv
         run: |
-          curl -LsSf https://astral.sh/uv/install.sh | sh  # Установка инструмента 'uv'
-          echo "$HOME/.uv/bin" >> $GITHUB_PATH             # Добавление 'uv' в PATH
-          uv --version                                     # Проверка установленной версии 'uv'
-          curl -LsSf https://astral.sh/uv/install.sh | sh  # Установка инструмента 'uv'
-          echo "$HOME/.uv/bin" >> $GITHUB_PATH             # Добавление 'uv' в PATH
-          uv --version                                     # Проверка установленной версии 'uv'
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.uv/bin" >> $GITHUB_PATH
+          uv --version
 
       - name: Synchronize dependencies with uv
-        run: uv sync  # Синхронизация зависимостей, указанных в pyproject.toml
+        run: uv sync
 
       - name: Wait for PostgreSQL to be ready
         run: |
           until pg_isready -h localhost -p 5432; do
             echo "Waiting for PostgreSQL..."
-            echo "Waiting for PostgreSQL..."
             sleep 2
-          done  # Ожидание готовности PostgreSQL перед выполнением следующих шагов
-          done  # Ожидание готовности PostgreSQL перед выполнением следующих шагов
+          done
 
       - name: Apply migrations
         working-directory: ./example
-        run: uv run python manage.py migrate  # Применение миграций Django
-        run: uv run python manage.py migrate  # Применение миграций Django
+        run: uv run python manage.py migrate
 
       - name: Run tests
         working-directory: ./example
-        run: uv run python manage.py test  # Запуск тестов Django
-        run: uv run python manage.py test  # Запуск тестов Django
+        run: uv run python manage.py test
