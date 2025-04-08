@@ -1,19 +1,13 @@
-<<<<<<< HEAD
 # Название рабочего процесса
 name: test db connect 
 
 # Определение событий, при которых запускается рабочий процесс
-=======
-name: TEST
-
->>>>>>> parent of a49fd96 (add coms in django.yaml for tests)
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
 
-<<<<<<< HEAD
 # Определение задач (jobs), которые будут выполняться
 jobs:
   test:
@@ -21,20 +15,13 @@ jobs:
     runs-on: ubuntu-latest
 
     # Определение сервисов, необходимых для работы задачи
-=======
-jobs:
-  test:
-    runs-on: ubuntu-latest
-
->>>>>>> parent of a49fd96 (add coms in django.yaml for tests)
     services:
       postgres:
         image: postgres:13
         env:
           POSTGRES_USER: postgres
-<<<<<<< HEAD
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
+          POSTGRES_PASSWORD: root
+          POSTGRES_DB: exampleDB
         ports:
           - 5432:5432  
         options: >-
@@ -42,38 +29,21 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-=======
-          POSTGRES_PASSWORD: root
-          POSTGRES_DB: exampleDB
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U postgres" --health-interval 10s --health-timeout 5s --health-retries 5
->>>>>>> parent of a49fd96 (add coms in django.yaml for tests)
-
+    # Последовательность шагов, выполняемых в рамках задачи
     steps:
       - name: Checkout repository
-<<<<<<< HEAD
         uses: actions/checkout@v3 
-=======
-        uses: actions/checkout@v3
->>>>>>> parent of a49fd96 (add coms in django.yaml for tests)
 
       - name: Set up Python 3.13
         uses: actions/setup-python@v4
         with:
-<<<<<<< HEAD
           python-version: '3.13'
-=======
-          python-version: '3.11'
->>>>>>> parent of a49fd96 (add coms in django.yaml for tests)
 
       - name: Install uv
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
           echo "$HOME/.uv/bin" >> $GITHUB_PATH
           uv --version
-
       - name: Synchronize dependencies with uv
         run: uv sync
 
@@ -83,15 +53,10 @@ jobs:
             echo "Waiting for PostgreSQL..."
             sleep 2
           done
-
       - name: Apply migrations
         working-directory: ./example
         run: uv run python manage.py migrate
 
       - name: Run tests
         working-directory: ./example
-<<<<<<< HEAD
         run: uv run python manage.py test
-=======
-        run: uv run python manage.py test
->>>>>>> parent of a49fd96 (add coms in django.yaml for tests)
