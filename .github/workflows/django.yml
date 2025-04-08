@@ -1,56 +1,65 @@
-name: TEST
+# Название рабочего процесса
+name: test db 
 
+# Определение событий, при которых запускается данный рабочий процесс
 on:
   push:
-    branches: [ main ]
+    branches: [ main ]  # Запуск при каждом push в ветку 'main'
   pull_request:
-    branches: [ main ]
+    branches: [ main ]  # Запуск при каждом pull request в ветку 'main'
 
+# Определение задач (jobs), которые будут выполняться в рамках рабочего процесса
 jobs:
   test:
+    # Указание операционной системы, на которой будет выполняться задача
     runs-on: ubuntu-latest
 
+    # Определение сервисов, необходимых для выполнения задачи
     services:
       postgres:
-        image: postgres:13
+        image: postgres:13  # Используемый образ PostgreSQL версии 13
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: root
-          POSTGRES_DB: exampleDB
+          POSTGRES_USER: postgres       # Имя пользователя для PostgreSQL
+          POSTGRES_PASSWORD: root       # Пароль пользователя
+          POSTGRES_DB: exampleDB        # Имя базы данных
         ports:
-          - 5432:5432
+          - 5432:5432  # Проброс порта для доступа к PostgreSQL
         options: >-
-          --health-cmd "pg_isready -U postgres" --health-interval 10s --health-timeout 5s --health-retries 5
+          --health-cmd "pg_isready -U postgres"  # Команда для проверки готовности сервиса
+          --health-interval 10s                  # Интервал между проверками
+          --health-timeout 5s                    # Таймаут для каждой проверки
+          --health-retries 5                     # Количество попыток проверки
 
+    # Последовательность шагов, выполняемых в рамках задачи
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3  # Действие для клонирования репозитория
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: '3.11'  # Установка версии Python 3.11
 
       - name: Install uv
         run: |
-          curl -LsSf https://astral.sh/uv/install.sh | sh
-          echo "$HOME/.uv/bin" >> $GITHUB_PATH
-          uv --version
+          curl -LsSf https://astral.sh/uv/install.sh | sh  # Загрузка и установка uv
+          echo "$HOME/.uv/bin" >> $GITHUB_PATH             # Добавление uv в PATH
+          uv --version                                     # Проверка установленной версии uv
 
       - name: Synchronize dependencies with uv
-        run: uv sync
+        run: uv sync  # Синхронизация зависимостей, указанных в pyproject.toml
 
       - name: Wait for PostgreSQL to be ready
         run: |
           until pg_isready -h localhost -p 5432; do
-            echo "Waiting for PostgreSQL..."
+            echo "Waiting for PostgreSQL..."  # Ожидание готовности PostgreSQL
             sleep 2
           done
 
       - name: Apply migrations
-        working-directory: ./example
-        run: uv run python manage.py migrate
+        working-directory: ./example  # Переход в директорию проекта
+        run: uv run python manage.py migrate  # Применение миграций базы данных
 
       - name: Run tests
-        working-directory: ./example
-        run: uv run python manage.py test
+        working-directory: ./example  # Переход в директорию проекта
+        run: uv run python manage.py test  # Запуск тестов Django
