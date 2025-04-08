@@ -1,6 +1,6 @@
 # Название рабочего процесса
 name: test db connect 
-
+ 
 # Определение событий, при которых запускается рабочий процесс
 on:
   push:
@@ -56,7 +56,11 @@ jobs:
       - name: Apply migrations
         working-directory: ./example
         run: uv run python manage.py migrate
-
-      - name: Run tests
+      # запуск тестов с помощью встроенного unittest
+      - name: Run unittests
         working-directory: ./example
         run: uv run python manage.py test
+      # запуск тестов с помощью pytests
+      - name: Run pytests
+        working-directory: ./example
+        run: uv run pytest -v
