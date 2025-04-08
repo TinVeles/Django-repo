@@ -61,5 +61,5 @@ jobs:
         run: uv run python manage.py migrate
 
       - name: Run tests
-        working-directory: ./example  # Переход в директорию проекта
-        run: uv run python manage.py test  # Запуск тестов Django
+        working-directory: ./example
+        run: uv run python manage.py test
