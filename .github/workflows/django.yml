@@ -19,9 +19,9 @@ jobs:
       postgres:
         image: postgres:13  # Используемый образ PostgreSQL версии 13
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: root
-          POSTGRES_DB: exampleDB
+          POSTGRES_USER: postgres       # Имя пользователя для PostgreSQL
+          POSTGRES_PASSWORD: root       # Пароль пользователя
+          POSTGRES_DB: exampleDB        # Имя базы данных
         ports:
           - 5432:5432  # Проброс порта для доступа к PostgreSQL
         options: >-
