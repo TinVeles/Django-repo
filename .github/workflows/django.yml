@@ -23,12 +23,13 @@ jobs:
           POSTGRES_PASSWORD: root       # Пароль для БД
           POSTGRES_DB: exampleDB        # Имя создаваемой БД
         ports:
-          - 5432:5432  # Проброс порта для доступа к БД
+          - 5432:5432 
         options: >-
-          --health-cmd "pg_isready -U postgres"  # Команда для проверки готовности БД
-          --health-interval 10s                  # Интервал между проверками
-          --health-timeout 5s                    # Таймаут для каждой проверки
-          --health-retries 5                     # Количество попыток проверки
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
 
     steps:
       - name: Checkout repository
