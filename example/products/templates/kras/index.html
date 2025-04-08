@@ -6,7 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Красноярск</title>
-    <link href="{% static 'styles/css/index.css' %}" rel="stylesheet"> 
+    <link href="{% static 'styles/kras_index/index.css' %}" rel="stylesheet"> 
+    <script src="{% static 'js/kras_index/script.js' %}"></script>
 </head>
 <body>
     <header>
@@ -16,7 +17,7 @@
         <h2>О городе</h2>
         <p>Красноярск — крупный город в Сибири, известный своей богатой природой, историей и культурой. Он расположен на берегу величественной реки Енисей и является важным центром региона.</p>
         
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D1%8F%D1%80%D1%81%D0%BA_%28%D0%BD%D0%BE%D1%87%D0%BD%D0%BE%D0%B9%29.jpg/1920px-%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D1%8F%D1%80%D1%81%D0%BA_%28%D0%BD%D0%BE%D1%87%D0%BD%D0%BE%D0%B9%29.jpg" alt="Пейзаж Красноярска" class="city-image">
+        <img src="{% static 'img/kras_index/Kras(night).jpg' %}" alt="Пейзаж Красноярска" class="city-image">
         
         <h2>Достопримечательности</h2>
         <p>Город впечатляет своими природными красотами, музеями, парками и историческими местами. Здесь можно насладиться прогулками по набережной, посетить музеи и узнать много нового о сибирской культуре.</p>
