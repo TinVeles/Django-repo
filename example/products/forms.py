@@ -11,7 +11,6 @@ class ItemForm(forms.ModelForm):
             "name": "Имя",
             "description": "Описание",
             "category": "Категория",
-            
         }
 
 class RegisterForm(UserCreationForm):
